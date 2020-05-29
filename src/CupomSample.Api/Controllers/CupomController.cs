@@ -18,19 +18,23 @@ namespace CupomSample.Api.Controllers
         }
 
         [HttpGet("{codigoCupom}")]
-        public async Task<IActionResult> ObterCupomPorCodigo(string codigoCupom){
+        public async Task<IActionResult> ObterCupomPorCodigo(string codigoCupom)
+        {
             var query = new ObterCupomPorCodigoQuery(codigoCupom);
             return Ok(await _mediator.Send(query));
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> CriarCupom([FromBody] CriarCupomCommand command)
         {
-            var response  = await _mediator.Send(command);
+            var response = await _mediator.Send(command);
             return Ok(await _mediator.Send(command));
         }
 
         [HttpGet("hc")]
-        public IActionResult Get() => Ok("Servico no ar");
+        public IActionResult Get()
+        { 
+            return Ok("Servico no ar"); 
+        }
     }
 }

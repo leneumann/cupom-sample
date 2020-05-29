@@ -2,12 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CupomSample.Application.CupomContext.Responses;
 using FluentValidation;
-using FluentValidation.Results;
 using MediatR;
 
-namespace CupomSample.Api.PipelineBehaviors
+namespace CupomSample.Api.Middlewares
 {
     public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
      where TRequest : IRequest<TResponse>
@@ -26,7 +24,7 @@ namespace CupomSample.Api.PipelineBehaviors
                 .SelectMany(x => x.Errors)
                 .Where(x => x != null)
                 .ToList();
-            //TODO: Implementar notifications handler ou exceptions handler
+            //Nota mental: mantive exception para nao prejudicar as commands, elas precisariam receber um resultado.
             if (failures.Any())
             {
                 throw new ValidationException(failures);
